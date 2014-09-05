@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "ubuntu1204"
+  config.vm.box = "hashicorp/precise64"
 
   config.vm.network :private_network, ip: "192.168.57.10"
   config.vm.hostname = "foreman.cloudcomplab.ch"
@@ -15,5 +15,12 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
 
-  config.vm.provision     :shell, :path => "src/script.sh"
+  config.vm.provider "vmware_fusion" do |vw|
+    vw.gui = false
+    vw.vmx['memsize'] = '1024'
+    vw.vmx['vhv.enable'] = "TRUE"
+    vw.vmx['mks.enable3d'] = "FALSE"
+  end
+
+  config.vm.provision :shell, :path => "src/script.sh"
 end
