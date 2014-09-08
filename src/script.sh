@@ -20,15 +20,15 @@ cp /tmp/files-to-go/foreman-installer-answers.yaml /etc/foreman/foreman-installe
 foreman-installer
 cp /tmp/files-to-go/default /var/lib/tftpboot/pxelinux.cfg/
 cd /tmp/
-wget http://downloads.theforeman.org/discovery/releases/latest/foreman-discovery-image-3.0.5-20140523.0.el6.iso-vmlinuz
-wget http://downloads.theforeman.org/discovery/releases/0.5/foreman-discovery-image-3.0.5-20140523.0.el6.iso-img
+wget -q http://downloads.theforeman.org/discovery/releases/latest/foreman-discovery-image-3.0.5-20140523.0.el6.iso-vmlinuz
+wget -q http://downloads.theforeman.org/discovery/releases/0.5/foreman-discovery-image-3.0.5-20140523.0.el6.iso-img
 mv /tmp/foreman-discovery-image-3.0.5-20140523.0.el6.iso-vmlinuz /var/lib/tftpboot/boot/vmlinuz0
 mv /tmp/foreman-discovery-image-3.0.5-20140523.0.el6.iso-img /var/lib/tftpboot/boot/initrd0.img
-wget --timeout=10 --tries=3 --no-check-certificate -nv -c "http://archive.ubuntu.com/ubuntu//dists/precise/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz" -O "/var/lib/tftpboot/boot/Ubuntu-12.04-x86_64-initrd.gz"
-wget --timeout=10 --tries=3 --no-check-certificate -nv -c "http://archive.ubuntu.com/ubuntu//dists/precise/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux" -O "/var/lib/tftpboot/boot/Ubuntu-12.04-x86_64-linux"
-chown -R /var/lib/tftpboot/boot
+wget -q --timeout=10 --tries=3 --no-check-certificate -nv -c "http://archive.ubuntu.com/ubuntu//dists/precise/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/initrd.gz" -O "/var/lib/tftpboot/boot/Ubuntu-12.04-x86_64-initrd.gz"
+wget -q --timeout=10 --tries=3 --no-check-certificate -nv -c "http://archive.ubuntu.com/ubuntu//dists/precise/main/installer-amd64/current/images/netboot/ubuntu-installer/amd64/linux" -O "/var/lib/tftpboot/boot/Ubuntu-12.04-x86_64-linux"
+chown -R foreman-proxy:root /var/lib/tftpboot/boot
 
-apt-get install iptables
+apt-get install -y iptables
 /sbin/iptables --table nat --append POSTROUTING --out-interface eth0 -j MASQUERADE
 /sbin/iptables --append FORWARD --in-interface eth1 -j ACCEPT
 sysctl net.ipv4.ip_forward=1
