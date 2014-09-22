@@ -27,4 +27,6 @@ IPAPPEND 2
 9. NOTE: THERE IS NO NEED TO EXECUTE THE FOREMAN INSTALL COMMAND SUGGESTED IN STEP 3, just click next
 10. Just choose the Operating System setup option suggested by the system, just select the 'Ubuntu mirror' as the media source and choose next.
 
+Note: verify that `puppetca` is executable in /etc/sudoers.d/foreman-proxy
+
 That is all. Your foreman is all configured to do host discovery and provisioning.
